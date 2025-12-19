@@ -23,7 +23,7 @@ use crate::{
         },
         zoom::ZoomState,
     },
-    utils::{float::NextDown, prelude::*, quirks::workspace_overview_is_open},
+    utils::{prelude::*, quirks::workspace_overview_is_open},
     wayland::{
         handlers::{screencopy::SessionHolder, xwayland_keyboard_grab::XWaylandGrabSeat},
         protocols::screencopy::{BufferConstraints, CursorSessionRef},
@@ -486,11 +486,11 @@ impl State {
 
                     position.x = position.x.clamp(
                         output_geometry.loc.x as f64,
-                        ((output_geometry.loc.x + output_geometry.size.w) as f64).next_lower(), // FIXME: Replace with f64::next_down when stable
+                        (output_geometry.loc.x + output_geometry.size.w - 1) as f64,
                     );
                     position.y = position.y.clamp(
                         output_geometry.loc.y as f64,
-                        ((output_geometry.loc.y + output_geometry.size.h) as f64).next_lower(), // FIXME: Replace with f64::next_down when stable
+                        (output_geometry.loc.y + output_geometry.size.h - 1) as f64,
                     );
 
                     // If confined, don't move pointer if it would go outside surface or region
